@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+This project is to used as a teacher led lab prior to assigning the 
+Hardware Lawnmower Filtering Project
+-->
+<html>
+    <head>
+        <title>Dog Inventory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel='stylesheet' href='Dog Inventory.css'>
+    </head>
+    
+    <body onload="init();">
+        <header id="banner"><h1>Dohmen's Dog Inventory</h1></header>
+        
+        
+        <section id = "categories">
+            <button class="accordion">BREEDS</button>
+            <div id="breed" class="panel"></div>
+            
+            <button class="accordion">NAMES</button>
+            <div id="name" class="panel"></div>
+            
+            <button class="accordion">NUMBER FLEAS</button>
+            <div id="numFleas" class="panel"></div>
+            
+        </section>
+        
+        <section id="dogInventory"></section>
+    
+        <script src='Dog Inventory.js'></script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+/*The following style code came from:
+            https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_accordion_symbol*/
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .active, .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .accordion:after {
+        content: '\002B';
+        color: #777;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .panel {
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+    #categories{
+        float:left;
+    }
+    #dogInventory{
+        display: grid;
+        grid-template-columns:33% 33% 33%;
+        grid-column-gap:5px;
+        grid-row-gap:5px;
+        justify-content: end; /*like float right*/
+        padding-left: 20px;
+    }
+    h1{
+        text-align: center;
+    }

@@ -1,0 +1,106 @@
+
+<html>
+    <head>
+        <title>Best Hardware Store (Lawnmowers)</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*The following style code came from:
+            https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_accordion_symbol*/
+            .accordion {
+                background-color: #eee;
+                color: #444;
+                cursor: pointer;
+                padding: 18px;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                font-size: 15px;
+                transition: 0.4s;
+            }
+
+            .active, .accordion:hover {
+                background-color: #ccc;
+            }
+
+            .accordion:after {
+                content: '\002B';
+                color: #777;
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
+
+            .active:after {
+                content: "\2212";
+            }
+
+            .panel {
+                padding: 0 18px;
+                background-color: white;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+            }
+            #categories{
+                float:left;
+            }
+            #lawnmowers{
+                display: grid;
+                grid-template-columns:33% 33% 33%;
+                grid-column-gap:5px;
+                grid-row-gap:5px;
+                justify-content: end; /*like float right*/
+                padding-left: 20px;
+            }
+            h1{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body onload="init();">
+        <header id="banner"><h1>Lawn Mowers at Best Hardware</h1></header>
+        
+        
+        <section id = "categories">
+            <button class="accordion">BRAND NAME</button>
+            <div id="brand" class="panel"></div>
+            
+            <button class="accordion">PRICE</button>
+            <div id="price" class="panel"></div>
+            
+            <button class="accordion">CUTTING WIDTH</button>
+            <div id="cuttingwidth" class="panel"></div>
+            
+        </section>
+        
+        <section id="lawnmowers"></section>
+        
+        
+        <script>
+            
+            /*The following JS code came from:
+            https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_accordion_symbol*/
+            
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                  panel.style.maxHeight = null;
+                } else {
+                  panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+              });
+            }
+        </script>
+        
+        
+        <script src="scripts/lawnmowers.js"></script>
+       
+    </body>
+</html>
