@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h1>Practice Fetching and Parsing CSV Data</h1>
+
+    <script>
+        function readCSVFileRWWay() {
+            fetch('Areas and Perimeters.csv')
+                .then(function(response) {
+                    if (response.ok) {
+                        // if the response is fine, handle it like text
+                        return response.text();
+                    } else {
+                        // turn any HTTP errors into an Error so they can be handled the
+                        // same as network errors (see .catch below)
+                        throw new Error(`HTTP error ${response.status}`);
+                    }
+                }).then(function(text) { // first, split up each line
+                    return text.split('\n');
+                }).then(function(lines) { // then turn each line into an object
+                    return lines.map(parseLine);
+                }).then(function(items) {
+                    // items is an array of objects
+                    console.log(items);
+                }).catch(console.log); // if I don't want to do anything but log
+
+        }
+
+        /**
+         * Helper function to Mr. Wrights fetch method above
+         * @param {type} line
+         * @returns {an object}
+         */
+        function parseLine(line) {
+            const curLine = line.split(',');
+            if (isNaN(curLine[0]))
+                return {
+                    "Header1": "Length",
+                    "Header2": "Width",
+                    "Header3": "Area",
+                    "Header4": "Perimeter"
+                };
+            else
+                return {
+                    "Length": curLine[0],
+                    "Width": curLine[1],
+                    "Area": parseInt(curLine[2]),
+                    "Perimeter": parseInt(curLine[3])
+                };
+        }
+
+        function main() {
+            console.log("hello main");
+            let theFileData = readCSVFileRWWay();
+            console.log(theFileData);
+        }
+
+        window.onload = main();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Two Dice Simulation</title>
+    <style>
+        table {
+            border: 3px black solid;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        
+        caption {
+            font-size: 2em;
+            font-weight: bold;
+            /* background-color: yellow; */
+        }
+        
+        td,
+        th {
+            border: 1px black solid;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Two Dice Simulation</h1>
+    </header>
+    <table id='output'>
+        <caption>Results of 1000 Simulated Roll of Die</caption>
+        <tr>
+            <th>Sums</th>
+            <th>Total</th>
+            <th>Percentage</th>
+            <th>Expected Percentage</th>
+        </tr>
+
+    </table>
+
+    <script>
+        /*  See directions in the pdf file "Exercises Involving Dictionaries" Ex 129 Two Dice Simulation  */
+        function rollDice() {
+            const die1 = parseInt(Math.random() * 6 + 1);
+            const die2 = parseInt(Math.random() * 6 + 1);
+            return die1 + die2;
+        }
+
+        function populateTable(dictExpectedPercents, dictSimulation) {
+            let tempTable = document.getElementById("output");
+            var tempTD = null;
+            let curPercentage = 0;
+            for (let sum in dictSimulation) {
+                let tempRow = document.createElement("TR");
+
+                //Create TD tag for curSum
+                tempTD = createTD(sum);
+                tempRow.appendChild(tempTD);
+
+                //creeate TD tag for total
+                tempTD = createTD(dictSimulation[sum]);
+                tempRow.appendChild(tempTD);
+
+                //create TD tag for percentage
+                curPercentage = (dictSimulation[sum] / 1000) * 100;
+                curPercentage = curPercentage.toFixed(2);
+                tempTD = createTD(curPercentage);
+                tempRow.appendChild(tempTD);
+
+                //create TD tag for expected percentage
+                curPercentage = dictExpectedPercents[sum].toFixed(2);
+                tempTD = createTD(curPercentage);
+                tempRow.appendChild(tempTD);
+
+                tempTable.append(tempRow);
+            }
+
+        }
+
+        function createTD(cellData) {
+            let tdTag = document.createElement("TD");
+            tdTag.innerHTML = cellData;
+            return tdTag;
+        }
+
+        function main() {
+            let curSum = 0;
+
+            //intialize expected Percent dictionary using values from http://www.gwydir.demon.co.uk/jo/probability/calcdice.htm
+            expectedPercents = {
+                2: (1 / 36) * 100,
+                3: (2 / 36) * 100,
+                4: (3 / 36) * 100,
+                5: (4 / 36) * 100,
+                6: (5 / 36) * 100,
+                7: (6 / 36) * 100,
+                8: (5 / 36) * 100,
+                9: (4 / 36) * 100,
+                10: (3 / 36) * 100,
+                11: (2 / 36) * 100,
+                12: (1 / 36) * 100
+            };
+            //populate the dict
+            let twoDieSimulation = {};
+            for (let i = 1; i <= 1000; i++) {
+                curSum = rollDice();
+
+                if (!twoDieSimulation[curSum])
+                    twoDieSimulation[curSum] = 1
+                else
+                    twoDieSimulation[curSum]++;
+
+            }
+            console.log(twoDieSimulation);
+
+
+            //access each key-value pair and output to the paragraph's innerhtml
+            // let strOutput = "";
+            // for (let key in twoDieSimulation) {
+            //     curSum = twoDieSimulation[key];
+            //     strOutput += key + ": " + curSum + "<br/>"
+            // }
+            // document.getElementById("output").innerHTML = strOutput;
+
+            //Output the percentages
+            populateTable(expectedPercents, twoDieSimulation);
+
+        } //end main
+
+        window.onload = main();
+    </script>
+</body>
+
+</html>
