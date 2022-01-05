@@ -42,7 +42,7 @@ function init() {
 }
 
 async function getData() {
-    const response = await fetch('https://github.com/dohmenator/HardWare-Store-Web-Site/raw/master/Hardware%20Website/public_html/Tchr%20Led%20Lab%20Dogs/Dog%20Inventory.csv');
+    const response = await fetch('Dog Inventory.csv', { mode: 'no-cors' });
     return response.text();
 }
 //OR??
@@ -77,7 +77,7 @@ function parseData(theData, arrDogs) {
 
 
 function readCSVFileRWWay() {
-    fetch('Dog Inventory.csv')
+    fetch('Dog Inventory.csv', { mode: 'no-cors' })
         .then(function(response) {
             if (response.ok) {
                 // if the response is fine, handle it like text
