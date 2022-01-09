@@ -8,6 +8,22 @@
         }
     </style>
     <script>
+        window.addEventListener("load", fetchDogs);
+
+        function fetchDogs() {
+            fetch("/Dog Inventory - Sheet1.csv")
+                .then((response) => {
+                    if (!response.ok) {
+                        throw response.status;
+                    }
+
+                    return response.text();
+                })
+                .then(console.log)
+                .catch((err) => {
+                    console.error("Didn't get dogs: " + err);
+                });
+        }
     </script>
 </head>
 
