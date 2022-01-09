@@ -64,13 +64,21 @@
 
         function createFilters(list) {
             const container = document.getElementById('filterContainer');
+            const fn = createFilter.bind(null, list);
             Object.keys(list[0])
                 .filter(key => key != 'Name' && key != 'ImageFile')
-                .forEach(key => {
-                    console.log(`Create filter for ${key}`);
-                });
+                .forEach(fn);
             // this line is important because it allows us to chain
             return list;
+        }
+
+        function createFilter(list, key) {
+            var aggregate = {};
+            for (var i of list) {
+                aggregate[i[key]] = (aggregate[i[key]] || 0) + 1;
+            }
+            console.log(`Aggregate ${key}`);
+            console.log(aggregate);
         }
     </script>
 </head>
