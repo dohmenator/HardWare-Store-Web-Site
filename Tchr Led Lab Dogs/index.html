@@ -65,6 +65,7 @@
         function createFilters(list) {
             const container = document.getElementById('filterContainer');
             Object.keys(list[0])
+                .filter(key => key != 'Name' && key != 'ImageFile')
                 .forEach(key => {
                     console.log(`Create filter for ${key}`);
                 });
