@@ -35,10 +35,30 @@
                     }
                     return dogList;
                 })
+                .then(renderDogs)
                 .then(console.log)
                 .catch((err) => {
                     console.error("Didn't get dogs: " + err);
                 });
+        }
+
+        // I'm not going to elaborate on this. The students should know enough
+        // by now to turn this into something meaningful
+        function renderDogs(list) {
+            const container = document.getElementById('dogContainer');
+            for (const i of list) {
+                const div = document.createElement("div");
+
+                div.appendChild(document.createTextNode(i.Name));
+
+                const img = document.createElement("img");
+                img.src = i.ImageFile;
+                div.appendChild(img);
+
+                container.appendChild(div);
+            }
+            // this line is important because it allows us to chain
+            return list;
         }
     </script>
 </head>
