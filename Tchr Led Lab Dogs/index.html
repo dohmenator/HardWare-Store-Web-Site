@@ -20,7 +20,21 @@
                     return response.text();
                 })
                 .then((body) => body.split("\r\n"))
-                .then((lines) => lines.shift().split(','))
+                .then((lines) => {
+                    const headers = lines.shift().split(',');
+                    const dogList = [];
+
+                    for (const line of lines) {
+                        const parts = line.split(',');
+                        const dog = {};
+                        for (let i = 0; i < parts.length; ++i) {
+                            const column_name = headers[i];
+                            dog[column_name] = parts[i];
+                        }
+                        dogList.push(dog);
+                    }
+                    return dogList;
+                })
                 .then(console.log)
                 .catch((err) => {
                     console.error("Didn't get dogs: " + err);
