@@ -20,6 +20,7 @@
                     return response.text();
                 })
                 .then((body) => body.split("\r\n"))
+                .then((lines) => lines.shift().split(','))
                 .then(console.log)
                 .catch((err) => {
                     console.error("Didn't get dogs: " + err);
