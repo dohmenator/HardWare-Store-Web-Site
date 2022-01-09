@@ -19,6 +19,7 @@
 
                     return response.text();
                 })
+                .then((body) => body.split("\r\n"))
                 .then(console.log)
                 .catch((err) => {
                     console.error("Didn't get dogs: " + err);
