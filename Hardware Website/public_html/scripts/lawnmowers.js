@@ -1,3 +1,7 @@
+/**
+ * Initialize the page by fetching the lawnmower information, rendering it, and
+ * composing the filter UX
+ */
 function init() {
     fetch("LawnMowers.csv")
         .then(handleHttpResponse)
@@ -6,6 +10,12 @@ function init() {
         .then(createFilterControls);
 }
 
+/**
+ * Retrieve just the body string from an HTTP response
+ *
+ * @param {Response} response An HTTP response object
+ * @returns {string} The response's body as a string
+ */
 function handleHttpResponse(response) {
     if (!response.ok) {
         console.error('Bad HTTP response');
@@ -15,6 +25,12 @@ function handleHttpResponse(response) {
     return response.text();
 }
 
+/**
+ * Parse the text into an array of objects
+ *
+ * @param {string} text The textual representation of a series of records
+ * @returns {Object[]} The collection of objects stored in an array
+ */
 function parseTextIntoObject(text) {
     const lines = text.split("\r\n");
     const headers = lines.shift().split(",");
@@ -34,6 +50,12 @@ function parseTextIntoObject(text) {
     return items;
 }
 
+/**
+ * Create filters for certain categories of data
+ *
+ * @param {Object[]} items The collection of objects
+ * @returns {Object[]} The input argument; this is used for method chaining
+ */
 function createFilterControls(items) {
     const brands = computeAggregate(items, "Brand");
     const prices = computeAggregate(items, "Price Range");
@@ -48,6 +70,14 @@ function createFilterControls(items) {
     return items;
 }
 
+/**
+ * Compute the number of times all the values occur for a given key in the
+ * collection.
+ *
+ * @param {Object[]} collection The collection of objects
+ * @param {string} key The key on which to aggregate
+ * @returns {Object} A dictionary of the values and number of occurrences
+ */
 function computeAggregate(collection, key) {
     const keys = {};
     for (const i of collection) {
@@ -56,6 +86,17 @@ function computeAggregate(collection, key) {
     return keys;
 }
 
+/**
+ * Render the filter options into the DOM.
+ *
+ * @param {Object} categories The dictionary of values and frequency
+ * @param {string} containerId The identity of the element to contain the newly
+ *                             newly created filter elements
+ * @param {Function} clickHandler The function which should be called when a
+ *                                filter is clicked
+ * @param {string|undefined} suffix Optional suffix for the values
+ * @returns {Object} A dictionary of the values and number of occurrences
+ */
 function renderFilters(categories, containerId, clickHandler, suffix) {
     let keys = Object.keys(categories);
     if (keys[0].indexOf("$") > -1) {
@@ -78,8 +119,13 @@ function renderFilters(categories, containerId, clickHandler, suffix) {
     }
 }
 
+/**
+ * Apply the filters to the rendered items
+ *
+ * @param {Object[]} collection The collection of objects
+ */
 function applyFilter(collection) {
-    console.log('Show every mower');
+    // Reset the view (show all the items)
     for (const i of collection) {
         i.element.style.display = 'block';
     }
@@ -89,19 +135,32 @@ function applyFilter(collection) {
     filterByCriteria(collection, "cuttingwidth", "Cutting Width");
 }
 
-function filterByCriteria(collection, category, keyName) {
+/**
+ * Filter the visible items by the specified criterion
+ *
+ * @param {Object[]} collection The collection of objects
+ * @param {string} category The id of the category to filter
+ * @param {string} key The key associated to that category
+ */
+function filterByCriteria(collection, category, key) {
     const values = getSelectedFilters(document.querySelectorAll(`#${category} input`));
     // only filter if anything is selected
     if (values.length > 0) {
         console.log(`Showing ${values.join(', ')}`)
         for (const i of collection) {
-            if (values.indexOf(i[keyName]) == -1) {
+            if (values.indexOf(i[key]) == -1) {
                 i.element.style.display = 'none';
             }
         }
     }
 }
 
+/**
+ * Get the values of all the checked filters in a collection
+ *
+ * @param {Object[]} filterCollection The collection of <input> elements
+ * @returns {string[]} The values of the checked filters
+ */
 function getSelectedFilters(filterCollection) {
     const selected = [];
     for (let i = 0; i < filterCollection.length; ++i) {
@@ -112,6 +171,12 @@ function getSelectedFilters(filterCollection) {
     return selected;
 }
 
+/**
+ * Display all the lawn mowers
+ *
+ * @param {Object[]} lawnMowerInventory The collection of lawn mowers
+ * @returns {Object[]} The input argument; this is used for method chaining
+ */
 function displayAllMowers(lawnMowerInventory) {
     const sectionLawnMowers = document.getElementById("lawnmowers");
 
@@ -131,6 +196,7 @@ function displayAllMowers(lawnMowerInventory) {
         divNewLawnMower.appendChild(divNewDescription);
 
         sectionLawnMowers.appendChild(divNewLawnMower);
+        // add a link to the DOM element to facilitate filtering
         mower.element = divNewLawnMower;
     }
 
