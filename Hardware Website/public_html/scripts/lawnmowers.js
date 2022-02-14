@@ -57,15 +57,18 @@ function parseTextIntoObject(text) {
  * @returns {Object[]} The input argument; this is used for method chaining
  */
 function createFilterControls(items) {
-    const brands = computeAggregate(items, "Brand");
-    const prices = computeAggregate(items, "Price Range");
-    const widths = computeAggregate(items, "Cutting Width");
+    const filterConfiguration = [
+        { key: "Brand", containerId: "brand" },
+        { key: "Price Range", containerId: "price" },
+        { key: "Cutting Width", containerId: "cuttingwidth", displaySuffix: "in" },
+    ];
 
     const clickHandler = applyFilter.bind(null, items);
 
-    renderFilters(brands, "brand", clickHandler);
-    renderFilters(prices, "price", clickHandler);
-    renderFilters(widths, "cuttingwidth", clickHandler, " in");
+    for (const filter of filterConfiguration) {
+        const aggregate = computeAggregate(items, filter.key);
+        renderFilters(aggregate, filter.containerId, clickHandler, filter.displaySuffix)
+    }
 
     return items;
 }
