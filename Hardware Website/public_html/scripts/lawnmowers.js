@@ -63,7 +63,7 @@ function createFilterControls(items) {
         { key: "Cutting Width", containerId: "cuttingwidth", displaySuffix: "in" },
     ];
 
-    const clickHandler = applyFilter.bind(null, items);
+    const clickHandler = applyFilter.bind(null, items, filterConfiguration);
 
     for (const filter of filterConfiguration) {
         const aggregate = computeAggregate(items, filter.key);
@@ -126,16 +126,17 @@ function renderFilters(categories, containerId, clickHandler, suffix) {
  * Apply the filters to the rendered items
  *
  * @param {Object[]} collection The collection of objects
+ * @param {Object[]} filterConfiguration The settings which control filtering
  */
-function applyFilter(collection) {
+function applyFilter(collection, filterConfiguration) {
     // Reset the view (show all the items)
     for (const i of collection) {
         i.element.style.display = 'block';
     }
 
-    filterByCriteria(collection, "brand", "Brand");
-    filterByCriteria(collection, "price", "Price Range");
-    filterByCriteria(collection, "cuttingwidth", "Cutting Width");
+    for (const filter of filterConfiguration) {
+        filterByCriteria(collection, filter.containerId, filter.key);
+    }
 }
 
 /**
