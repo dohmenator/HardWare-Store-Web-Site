@@ -272,9 +272,6 @@ function getFilteredLawnMowers(tempInventory, arrayCheckedCategories) {
  */
 function displayCheckedCategories(FilteredInventory) {
     var sectionLawnMowers = document.getElementById("lawnmowers");
-    var divNewLawnMower = document.createElement("DIV");
-    var imageLawnMower = document.createElement("IMG");
-    var divNewDescription = document.createElement("DIV");
 
     //first clear all currently displayed lawn mowers
     var nodesLawnMowerSection = sectionLawnMowers.childNodes;
