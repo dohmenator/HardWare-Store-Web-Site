@@ -1,7 +1,6 @@
 //alert("lawnmowers script linked");
 //Global array of LawnMower objects
 var lawnMowerInventory = [];
-var filterCategories = [];
 
 function init() {
     requestDataFile("LawnMowers.csv");
@@ -354,8 +353,6 @@ function displayAllMowers() {
 function storeFileData(arrayFileData) {
     //Get column headings from file by splitting first element on the comma
     var arrTemp = arrayFileData[0].split(/[,]/);
-    for (var i = 0; i < arrTemp.length; i++)
-        filterCategories.push(arrTemp[i]);
 
     //Populate global array lawnMowerInventory starting at array element 1 of
     //arrayFileData. (element 0 contains the column headings of the file
