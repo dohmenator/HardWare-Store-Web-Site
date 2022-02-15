@@ -3,11 +3,17 @@
  * composing the filter UX
  */
 function init() {
+    const filterConfiguration = [
+        { key: "Brand", containerId: "brand" },
+        { key: "Price Range", containerId: "price" },
+        { key: "Cutting Width", containerId: "cuttingwidth", displaySuffix: " in" },
+    ];
+
     fetch("LawnMowers.csv")
         .then(handleHttpResponse)
         .then(parseTextIntoObject)
-        .then(displayAllMowers)
-        .then(createFilterControls);
+        .then(displayAllMowers.bind(null, filterConfiguration))
+        .then(createFilterControls.bind(null, filterConfiguration));
 }
 
 /**
@@ -53,16 +59,11 @@ function parseTextIntoObject(text) {
 /**
  * Create filters for certain categories of data
  *
+ * @param {Object[]} filterConfiguration The settings which control filtering
  * @param {Object[]} items The collection of objects
  * @returns {Object[]} The input argument; this is used for method chaining
  */
-function createFilterControls(items) {
-    const filterConfiguration = [
-        { key: "Brand", containerId: "brand" },
-        { key: "Price Range", containerId: "price" },
-        { key: "Cutting Width", containerId: "cuttingwidth", displaySuffix: "in" },
-    ];
-
+function createFilterControls(filterConfiguration, items) {
     const clickHandler = applyFilter.bind(null, filterConfiguration);
 
     for (const filter of filterConfiguration) {
@@ -199,16 +200,16 @@ function clean(s) {
 /**
  * Display all the lawn mowers
  *
+ * @param {Object[]} filterConfiguration The settings which control filtering
  * @param {Object[]} lawnMowerInventory The collection of lawn mowers
  * @returns {Object[]} The input argument; this is used for method chaining
  */
-function displayAllMowers(lawnMowerInventory) {
+function displayAllMowers(filterConfiguration, lawnMowerInventory) {
     const sectionLawnMowers = document.getElementById("lawnmowers");
 
     for (const mower of lawnMowerInventory) {
         const divNewLawnMower = document.createElement("DIV");
-
-        divNewLawnMower.className = `brand_${clean(mower.Brand)} price_${clean(mower["Price Range"])} cuttingwidth_${clean(mower["Cutting Width"])}`;
+        divNewLawnMower.className = filterConfiguration.map(i => `${i.containerId}_${clean(mower[i.key])}`).join(" ");
         const imageLawnMower = document.createElement("IMG");
         const divNewDescription = document.createElement("DIV");
         const fileName = "images/" + mower.ImageFile;
