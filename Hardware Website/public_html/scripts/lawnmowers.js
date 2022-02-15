@@ -147,7 +147,7 @@ function applyFilter(collection, filterConfiguration) {
  * @param {string} key The key associated to that category
  */
 function filterByCriteria(collection, category, key) {
-    const values = getSelectedFilters(document.querySelectorAll(`#${category} input`));
+    const values = getSelectedFilters(document.getElementById(category).querySelectorAll("input"));
     // only filter if anything is selected
     if (values.length > 0) {
         console.log(`Showing ${values.join(', ')}`)
@@ -162,7 +162,7 @@ function filterByCriteria(collection, category, key) {
 /**
  * Get the values of all the checked filters in a collection
  *
- * @param {Object[]} filterCollection The collection of <input> elements
+ * @param {Element[]} filterCollection The collection of <input> elements
  * @returns {string[]} The values of the checked filters
  */
 function getSelectedFilters(filterCollection) {
