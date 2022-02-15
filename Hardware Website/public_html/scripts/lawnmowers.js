@@ -224,8 +224,6 @@ function displayAllMowers(filterConfiguration, lawnMowerInventory) {
         divNewLawnMower.appendChild(divNewDescription);
 
         sectionLawnMowers.appendChild(divNewLawnMower);
-        // add a link to the DOM element to facilitate filtering
-        mower.element = divNewLawnMower;
     }
 
     return lawnMowerInventory;
