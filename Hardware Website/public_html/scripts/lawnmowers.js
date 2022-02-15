@@ -135,34 +135,25 @@ function applyFilter(filterConfiguration) {
         mowers.children[i].style.display = 'none';
     }
 
-    let filters = [];
+    // this collection holds elements which are visible given the filter state
+    let visibleElements = [];
     for (const filter of filterConfiguration) {
-        let values = getSelectedFilters(document.getElementById(filter.containerId).querySelectorAll("input"));
+        let values = getElementsWhichMatchSelectedFilters(document.getElementById(filter.containerId).querySelectorAll("input"));
         if (values.length > 0) {
-            filters.push(values);
+            visibleElements.push(values);
         }
     }
 
-    // if nothing is filtered, show everything
-    if (filters.length == 0) {
+    // if there are no visible elements, it means nothing is filtered, so show everything
+    if (visibleElements.length == 0) {
         for (let i = 0; i < mowers.children.length; ++i) {
             mowers.children[i].style.display = 'block';
         }
     } else {
-        // hold a list of all the mowers which meet the criteria for each filter category
-        let items = [];
-        for (var filter of filters) {
-            let visibleMowers = [];
-            for (let filterValue of filter) {
-                visibleMowers.push(...Array.from(mowers.querySelectorAll(`.${filterValue}`)));
-            }
-            items.push(visibleMowers);
-        }
-
         // the final list of visible mowers will be the intersection of all the lists
-        let finalList = items[0];
-        for (let i = 1; i < items.length; ++i) {
-            finalList = finalList.filter(item => items[i].indexOf(item) > -1);
+        let finalList = visibleElements[0];
+        for (let i = 1; i < visibleElements.length; ++i) {
+            finalList = finalList.filter(item => visibleElements[i].indexOf(item) > -1);
         }
 
         for (let item of finalList) {
@@ -172,16 +163,17 @@ function applyFilter(filterConfiguration) {
 }
 
 /**
- * Get the values of all the checked filters in a collection
+ * Get the elements which match any of the checked filters in a collection
  *
  * @param {Element[]} filterCollection The collection of <input> elements
- * @returns {string[]} The values of the checked filters
+ * @returns {Element[]} The elements which match the selected filter
  */
-function getSelectedFilters(filterCollection) {
-    const selected = [];
+function getElementsWhichMatchSelectedFilters(filterCollection) {
+    const mowers = document.getElementById("lawnmowers");
+    let selected = [];
     for (let i = 0; i < filterCollection.length; ++i) {
         if (filterCollection[i].checked) {
-            selected.push(filterCollection[i].value);
+            selected = selected.concat(Array.from(mowers.querySelectorAll(`.${filterCollection[i].value}`)));
         }
     }
     return selected;
