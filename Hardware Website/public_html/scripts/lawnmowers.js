@@ -265,9 +265,10 @@ function getFilteredLawnMowers(tempInventory, arrayCheckedCategories) {
 
 }
 
-/* Helper method to filterContent method
+/** Helper method to filterContent method
  * Will either display all lawn mowers or only those stored in arrayCheckedCats
- * @param {array} arrayCheckedCats
+ *
+ * @param {object[]} FilteredInventory The list of lawn mowers
  */
 function displayCheckedCategories(FilteredInventory) {
     var sectionLawnMowers = document.getElementById("lawnmowers");
