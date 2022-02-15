@@ -9,7 +9,7 @@ function init() {
     populateFilterBoxes();
 
     //After filter boxes are populated with correct amount of checkboxes
-    //call addEventListenerChkBoxes() method 
+    //call addEventListenerChkBoxes() method
     addEventListenerChkBoxes();
 
     displayAllMowers();
@@ -24,7 +24,7 @@ function populateFilterBoxes() {
     createPriceFilterBox();
     createCuttingWidthFilterBox();
 
-    //addEventListenerChkBoxes();    
+    //addEventListenerChkBoxes();
     //displayAllMowers();
 }
 
@@ -53,7 +53,7 @@ function createBrandFilterBox() {
         var newLabel = document.createElement("LABEL");
         var spanChkBoxText = document.createElement("SPAN");
 
-        //Set appropriate attributes        
+        //Set appropriate attributes
         chkBox.type = "checkbox";
         chkBox.className = "chkBox_Brand";
         chkBox.value = curBrand.toLowerCase();
@@ -109,7 +109,7 @@ function createPriceFilterBox() {
         var newPriceLabel = document.createElement("LABEL");
         var spanChkBoxRange = document.createElement("SPAN");
 
-        //Set appropriate attributes        
+        //Set appropriate attributes
         priceChkBox.type = "checkbox";
         priceChkBox.className = "chkBox_price";
         priceChkBox.value = ranges[i];
@@ -169,7 +169,7 @@ function createCuttingWidthFilterBox() {
         var newLabel = document.createElement("LABEL");
         var spanChkBox = document.createElement("SPAN");
 
-        //Set appropriate attributes        
+        //Set appropriate attributes
         ChkBox.type = "checkbox";
         ChkBox.className = "chkBox_cutwidth";
         ChkBox.value = cuttingWidths[i].substring(0, 2);
@@ -226,7 +226,7 @@ function filterContent() {
 } //End filterContent method
 
 /* Helper function to filterContent method
- * Gets all categories that are checked 
+ * Gets all categories that are checked
  * @param {array} arrayCheckedCategories (initially empty array)
  */
 function getCheckedCategorires(arrayCheckedCategories) {
@@ -290,7 +290,7 @@ function displayCheckedCategories(FilteredInventory) {
         displayAllMowers();
 
     else {
-        //display only content from arrayCheckedCats         
+        //display only content from arrayCheckedCats
         for (var i = 0; i < FilteredInventory.length; i++) {
             var divNewLawnMower = document.createElement("DIV");
             var imageLawnMower = document.createElement("IMG");
@@ -344,7 +344,7 @@ function displayAllMowers() {
 }
 
 /**
- * Data in the file has been split on the new line character.  Meaning, 
+ * Data in the file has been split on the new line character.  Meaning,
  * each element in arrayFileData stores a line (a record) of data from the file
  * each element is a of type string, each field in that string in separated by
  * a comma
@@ -385,8 +385,8 @@ function storeFileData(arrayFileData) {
 
 
 /**
- * Function to handle the data received from the requestDataFile method; 
- * this function gets passed to the HttpRequest constructor. 
+ * Function to handle the data received from the requestDataFile method;
+ * this function gets passed to the HttpRequest constructor.
  * @param {string} text
  * @returns {undefined}
  */
@@ -396,8 +396,8 @@ function handleData(text) {
 }
 
 /**
- * Request data file (starts the process of reading a file.  
- * @param {String} fileName name of file to request 
+ * Request data file (starts the process of reading a file.
+ * @param {String} fileName name of file to request
  */
 function requestDataFile(fileName) {
 
@@ -428,7 +428,7 @@ function HttpRequest(url, callback) {
         if (tempRequest.readyState === 4) {
             //the requested data has been fully received
             if (tempRequest.status === 200) {
-                //file was found 
+                //file was found
                 callback(tempRequest.responseText);
             } else {
                 alert("An error occurred tying to contact the server");
