@@ -114,7 +114,7 @@ function renderFilters(categories, containerId, clickHandler, suffix) {
         const label = document.createElement("label");
         const check = document.createElement("input");
         check.type = "checkbox";
-        check.value = key;
+        check.value = `${containerId}_${clean(key)}`;
         label.appendChild(check);
         label.appendChild(document.createTextNode(`${key}${ suffix || ''} (${categories[key]})`));
         label.addEventListener('click', clickHandler)
@@ -129,32 +129,44 @@ function renderFilters(categories, containerId, clickHandler, suffix) {
  * @param {Object[]} filterConfiguration The settings which control filtering
  */
 function applyFilter(collection, filterConfiguration) {
-    // Reset the view (show all the items)
-    for (const i of collection) {
-        i.element.style.display = 'block';
+    const mowers = document.getElementById("lawnmowers");
+    // Reset the view (hide all the items)
+    for (let i = 0; i < mowers.children.length; ++i) {
+        mowers.children[i].style.display = 'none';
     }
 
+    let filters = [];
     for (const filter of filterConfiguration) {
-        filterByCriteria(collection, filter.containerId, filter.key);
+        let values = getSelectedFilters(document.getElementById(filter.containerId).querySelectorAll("input"));
+        if (values.length > 0) {
+            filters.push(values);
+        }
     }
-}
 
-/**
- * Filter the visible items by the specified criterion
- *
- * @param {Object[]} collection The collection of objects
- * @param {string} category The id of the category to filter
- * @param {string} key The key associated to that category
- */
-function filterByCriteria(collection, category, key) {
-    const values = getSelectedFilters(document.getElementById(category).querySelectorAll("input"));
-    // only filter if anything is selected
-    if (values.length > 0) {
-        console.log(`Showing ${values.join(', ')}`)
-        for (const i of collection) {
-            if (values.indexOf(i[key]) == -1) {
-                i.element.style.display = 'none';
+    // if nothing is filtered, show everything
+    if (filters.length == 0) {
+        for (let i = 0; i < mowers.children.length; ++i) {
+            mowers.children[i].style.display = 'block';
+        }
+    } else {
+        // hold a list of all the mowers which meet the criteria for each filter category
+        let items = [];
+        for (var filter of filters) {
+            let visibleMowers = [];
+            for (let filterValue of filter) {
+                visibleMowers.push(...Array.from(mowers.querySelectorAll(`.${filterValue}`)));
             }
+            items.push(visibleMowers);
+        }
+
+        // the final list of visible mowers will be the intersection of all the lists
+        let finalList = items[0];
+        for (let i = 1; i < items.length; ++i) {
+            finalList = finalList.filter(item => items[i].indexOf(item) > -1);
+        }
+
+        for (let item of finalList) {
+            item.style.display = 'block';
         }
     }
 }
@@ -176,6 +188,16 @@ function getSelectedFilters(filterCollection) {
 }
 
 /**
+ * Clean a string to make it suitable for use as a CSS class name
+ *
+ * @param {string} s The input string
+ * @returns {string} The string with all the nasty characters removed
+ */
+function clean(s) {
+    return s.replace(/[ $.]/g, '_')
+}
+
+/**
  * Display all the lawn mowers
  *
  * @param {Object[]} lawnMowerInventory The collection of lawn mowers
@@ -186,6 +208,8 @@ function displayAllMowers(lawnMowerInventory) {
 
     for (const mower of lawnMowerInventory) {
         const divNewLawnMower = document.createElement("DIV");
+
+        divNewLawnMower.className = `brand_${clean(mower.Brand)} price_${clean(mower["Price Range"])} cuttingwidth_${clean(mower["Cutting Width"])}`;
         const imageLawnMower = document.createElement("IMG");
         const divNewDescription = document.createElement("DIV");
         const fileName = "images/" + mower.ImageFile;
