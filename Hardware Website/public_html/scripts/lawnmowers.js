@@ -280,7 +280,6 @@ function displayCheckedCategories(FilteredInventory) {
     var nodesLawnMowerSection = sectionLawnMowers.childNodes;
 
     for (var i = nodesLawnMowerSection.length - 1; i >= 0; i--) {
-        nodesLawnMowerSection[i].type;
         sectionLawnMowers.removeChild(nodesLawnMowerSection[i]);
     }
 
