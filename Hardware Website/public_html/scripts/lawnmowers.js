@@ -132,32 +132,18 @@ function createCuttingWidthFilterBox() {
     ];
     var countCutWidths = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    for (let i = 0; i < lawnMowerInventory.length; i++) {
-        let curCutWidth = parseInt(lawnMowerInventory[i].cuttingWidth);
-
-        if (curCutWidth === 14)
-            countCutWidths[0]++;
-        if (curCutWidth === 16)
-            countCutWidths[1]++;
-        if (curCutWidth === 17)
-            countCutWidths[2]++;
-        if (curCutWidth === 18)
-            countCutWidths[3]++;
-        if (curCutWidth === 19)
-            countCutWidths[4]++;
-        if (curCutWidth === 20)
-            countCutWidths[5]++;
-        if (curCutWidth === 21)
-            countCutWidths[6]++;
-        if (curCutWidth === 22)
-            countCutWidths[7]++;
-        if (curCutWidth === 30)
-            countCutWidths[8]++;
-
+    for (let i of lawnMowerInventory) {
+        const curCutWidth = i.cuttingWidth;
+        for (let j = 0; j < cuttingWidths.length; j++) {
+            if (cuttingWidths[j].startsWith(curCutWidth)) {
+                countCutWidths[j]++;
+                break;
+            }
+        }
     }
 
     var sectionCuttingWidth = document.getElementById("cuttingwidth");
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < cuttingWidths.length; i++) {
         var ChkBox = document.createElement("INPUT");
         var newLabel = document.createElement("LABEL");
         var spanChkBox = document.createElement("SPAN");
