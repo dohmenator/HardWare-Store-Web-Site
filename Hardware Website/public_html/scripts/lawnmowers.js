@@ -349,10 +349,9 @@ function displayAllMowers() {
  */
 function storeFileData(arrayFileData) {
     //Get column headings from file by splitting first element on the comma
-    var arrTemp = arrayFileData.pop().split(/[,]/);
+    var arrTemp = arrayFileData.shift().split(/[,]/);
 
-    //Populate global array lawnMowerInventory starting at array element 1 of
-    //arrayFileData. (element 0 contains the column headings of the file
+    //Populate global array lawnMowerInventory
     for (const i of arrayFileData) {
         //split current line of lawn mower inventory on the comma
         arrTemp = i.split(/[,]/);
