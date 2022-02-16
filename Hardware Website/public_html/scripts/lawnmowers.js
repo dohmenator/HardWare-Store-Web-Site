@@ -131,10 +131,9 @@ function createCuttingWidthFilterBox() {
         "20 in.", "21 in.", "22 in.", "30 in."
     ];
     var countCutWidths = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var curCutWidth = 0;
 
-    for (var i = 0; i < lawnMowerInventory.length; i++) {
-        curCutWidth = parseInt(lawnMowerInventory[i].cuttingWidth);
+    for (let i = 0; i < lawnMowerInventory.length; i++) {
+        let curCutWidth = parseInt(lawnMowerInventory[i].cuttingWidth);
 
         if (curCutWidth === 14)
             countCutWidths[0]++;
@@ -158,7 +157,7 @@ function createCuttingWidthFilterBox() {
     }
 
     var sectionCuttingWidth = document.getElementById("cuttingwidth");
-    for (i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
         var ChkBox = document.createElement("INPUT");
         var newLabel = document.createElement("LABEL");
         var spanChkBox = document.createElement("SPAN");
@@ -173,7 +172,7 @@ function createCuttingWidthFilterBox() {
         newLabel.appendChild(ChkBox);
         newLabel.appendChild(spanChkBox);
 
-        //create div to hold amount of current price range in inventory
+        //create div to hold amount of current cutting width in inventory
         var spanAmount = document.createElement("SPAN");
         spanAmount.innerHTML = "&nbsp;(" + countCutWidths[i] + ")<br>";
 
