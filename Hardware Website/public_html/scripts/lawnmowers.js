@@ -81,8 +81,8 @@ function createPriceFilterBox() {
     ];
     var curPrice = 0;
 
-    for (var i = 0; i < lawnMowerInventory.length; i++) {
-        curPrice = parseInt(lawnMowerInventory[i].price);
+    for (const i of lawnMowerInventory) {
+        curPrice = parseInt(i.price);
         if (curPrice >= 50 && curPrice <= 100)
             countOfRanges[0]++;
         if (curPrice > 100 && curPrice <= 250)
