@@ -7,10 +7,6 @@ function init() {
 
     populateFilterBoxes();
 
-    //After filter boxes are populated with correct amount of checkboxes
-    //call addEventListenerChkBoxes() method
-    addEventListenerChkBoxes();
-
     displayMowers(lawnMowerInventory);
 }
 
@@ -22,9 +18,6 @@ function populateFilterBoxes() {
     createBrandFilterBox();
     createPriceFilterBox();
     createCuttingWidthFilterBox();
-
-    //addEventListenerChkBoxes();
-    //displayMowers();
 }
 
 /**
@@ -56,6 +49,7 @@ function createBrandFilterBox() {
         chkBox.type = "checkbox";
         chkBox.className = "chkBox_Brand";
         chkBox.value = curBrand.toLowerCase();
+        chkBox.addEventListener("click", filterContent);
         spanChkBoxText.innerHTML = curBrand;
 
         newLabel.appendChild(chkBox);
@@ -112,6 +106,7 @@ function createPriceFilterBox() {
         priceChkBox.type = "checkbox";
         priceChkBox.className = "chkBox_price";
         priceChkBox.value = ranges[i];
+        priceChkBox.addEventListener("click", filterContent);
         spanChkBoxRange.innerHTML = ranges[i];
 
         newPriceLabel.appendChild(priceChkBox);
@@ -172,6 +167,7 @@ function createCuttingWidthFilterBox() {
         ChkBox.type = "checkbox";
         ChkBox.className = "chkBox_cutwidth";
         ChkBox.value = cuttingWidths[i].substring(0, 2);
+        ChkBox.addEventListener("click", filterContent);
         spanChkBox.innerHTML = cuttingWidths[i];
 
         newLabel.appendChild(ChkBox);
@@ -184,23 +180,6 @@ function createCuttingWidthFilterBox() {
         sectionCuttingWidth.appendChild(newLabel);
         sectionCuttingWidth.appendChild(spanAmount);
 
-    }
-
-}
-
-/**
- * Get all inputs from index page. If input is of type checkbox add a click
- * event listener to it.  Upon it being clicked (or its text clicked) send
- * current checkbox to the filterContent method
- */
-function addEventListenerChkBoxes() {
-    const arrayInputs = document.getElementsByTagName("INPUT");
-
-    for (var i = 0; i < arrayInputs.length; i++) {
-        if (arrayInputs[i].getAttribute("type") === "checkbox") {
-            var chkBox = arrayInputs[i];
-            chkBox.addEventListener("click", filterContent);
-        }
     }
 
 }
