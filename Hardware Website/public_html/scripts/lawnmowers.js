@@ -11,7 +11,7 @@ function init() {
     //call addEventListenerChkBoxes() method
     addEventListenerChkBoxes();
 
-    displayAllMowers();
+    displayMowers(lawnMowerInventory);
 }
 
 /**
@@ -24,7 +24,7 @@ function populateFilterBoxes() {
     createCuttingWidthFilterBox();
 
     //addEventListenerChkBoxes();
-    //displayAllMowers();
+    //displayMowers();
 }
 
 /**
@@ -283,52 +283,32 @@ function displayCheckedCategories(FilteredInventory) {
     //Now show either all inventory or selected inventory
     if (FilteredInventory.length === 0)
     //show entire lawn mower inventory inventory array (lawnMowerInventory)
-        displayAllMowers();
+        displayMowers(lawnMowerInventory);
 
     else {
-        //display only content from arrayCheckedCats
-        for (var i = 0; i < FilteredInventory.length; i++) {
-            var divNewLawnMower = document.createElement("DIV");
-            var imageLawnMower = document.createElement("IMG");
-            var divNewDescription = document.createElement("DIV");
-            var fileName = "images/" + FilteredInventory[i].imageFileName;
-            imageLawnMower.src = fileName;
-            imageLawnMower.alt = "Image of Lawn Mower" + i;
-            var description = FilteredInventory[i].description + "<br>";
-            description += "$" + FilteredInventory[i].price;
-            if (FilteredInventory[i].saleDescription !== "No Sale Description")
-                description += FilteredInventory[i].saleDescription + "<br>";
-
-            divNewDescription.innerHTML = description;
-            divNewLawnMower.appendChild(imageLawnMower);
-            divNewLawnMower.appendChild(divNewDescription);
-
-            sectionLawnMowers.appendChild(divNewLawnMower);
-        }
-
+        displayMowers(FilteredInventory);
     } //end else block
 
 } //End displayCheckedCategories method
 
-/* Helper function to initialize and displayCheckedCategoreies
- * Displays all lawn mowers becuase no filter has been set or page has reloaded
+/** Display all the mowers requested
+ * 
+ * @param {object[]} inventory The mowers to be displayed
  */
-function displayAllMowers() {
+function displayMowers(inventory) {
     var sectionLawnMowers = document.getElementById("lawnmowers");
 
-    //console.log(lawnMowerInventory[0].brand);
-
-    for (var i = 0; i < lawnMowerInventory.length; i++) {
+    for (var i = 0; i < inventory.length; i++) {
         var divNewLawnMower = document.createElement("DIV");
         var imageLawnMower = document.createElement("IMG");
         var divNewDescription = document.createElement("DIV");
-        var fileName = "images/" + lawnMowerInventory[i].imageFileName;
+        var fileName = "images/" + inventory[i].imageFileName;
         imageLawnMower.src = fileName;
         imageLawnMower.alt = "Image of Lawn Mower" + i;
-        var description = lawnMowerInventory[i].description + "<br>";
-        description += "$" + lawnMowerInventory[i].price;
-        if (lawnMowerInventory[i].saleDescription !== "No Sale Description")
-            description += lawnMowerInventory[i].saleDescription + "<br>";
+        var description = inventory[i].description + "<br>";
+        description += "$" + inventory[i].price;
+        if (inventory[i].saleDescription !== "No Sale Description")
+            description += inventory[i].saleDescription + "<br>";
 
         divNewDescription.innerHTML = description;
         divNewLawnMower.appendChild(imageLawnMower);
