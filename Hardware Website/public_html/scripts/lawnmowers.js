@@ -75,29 +75,32 @@ function createBrandFilterBox() {
 
 function createPriceFilterBox() {
     //get count of lawnmowers prices at the within the ranges above
-    var countOfRanges = [0, 0, 0, 0, 0];
-    var ranges = ["$50.00 To $100.00", "$100.00 To $250.00",
-        "$250.00 To $500.00", "$500.00 To $1000.00", "Over $1000.00"
+    var ranges = [
+        { min: 50, label: "$50.00 To $100.00", count: 0 },
+        { min: 100, label: "$100.00 To $250.00", count: 0 },
+        { min: 250, label: "$250.00 To $500.00", count: 0 },
+        { min: 500, label: "$500.00 To $1000.00", count: 0 },
+        { min: 1000, label: "Over $1000.00", count: 0 },
     ];
-    var curPrice = 0;
 
     for (const i of lawnMowerInventory) {
-        curPrice = parseInt(i.price);
-        if (curPrice >= 50 && curPrice <= 100)
-            countOfRanges[0]++;
-        if (curPrice > 100 && curPrice <= 250)
-            countOfRanges[1]++;
-        if (curPrice > 250 && curPrice <= 500)
-            countOfRanges[2]++;
-        if (curPrice > 500 && curPrice <= 1000)
-            countOfRanges[3]++;
-        if (curPrice > 1000)
-            countOfRanges[4]++;
+        let curPrice = parseInt(i.price);
+        let myRange = null;
+        for (const range of ranges) {
+            if (curPrice > range.min) {
+                myRange = range;
+            } else {
+                break;
+            }
+        }
+        if (myRange != null) {
+            myRange.count++;
+        }
     }
 
     //Create label, checkbox, and span elements for the ranges above
     var sectionPrice = document.getElementById("price");
-    for (i = 0; i < 5; i++) {
+    for (const range of ranges) {
         var priceChkBox = document.createElement("INPUT");
         var newPriceLabel = document.createElement("LABEL");
         var spanChkBoxRange = document.createElement("SPAN");
@@ -105,22 +108,20 @@ function createPriceFilterBox() {
         //Set appropriate attributes
         priceChkBox.type = "checkbox";
         priceChkBox.className = "chkBox_price";
-        priceChkBox.value = ranges[i];
+        priceChkBox.value = range.label;
         priceChkBox.addEventListener("click", filterContent);
-        spanChkBoxRange.innerHTML = ranges[i];
+        spanChkBoxRange.innerHTML = range.label;
 
         newPriceLabel.appendChild(priceChkBox);
         newPriceLabel.appendChild(spanChkBoxRange);
 
         //create div to hold amount of current price range in inventory
         var spanRangeAmount = document.createElement("SPAN");
-        spanRangeAmount.innerHTML = "&nbsp;(" + countOfRanges[i] + ")<br>";
+        spanRangeAmount.innerHTML = "&nbsp;(" + range.count + ")<br>";
 
         sectionPrice.appendChild(newPriceLabel);
         sectionPrice.appendChild(spanRangeAmount);
-
     }
-
 } //End createPriceFilterBox method
 
 function createCuttingWidthFilterBox() {
