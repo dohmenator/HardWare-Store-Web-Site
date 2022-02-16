@@ -38,7 +38,7 @@ function createBrandFilterBox() {
         //Get current brand from inventory array
         curBrand = lawnMowerInventory[index].brand;
 
-        //For each diffent brand create a check box with a label(to make text shown
+        //For each different brand create a check box with a label(to make text shown
         //next to checkbox clickable, and add a span element to host the text
         //(the brand name) next to the checkbox
         var chkBox = document.createElement("INPUT");
@@ -190,7 +190,7 @@ function createCuttingWidthFilterBox() {
 function filterContent() {
     //Get checked categories
     var arrayCheckedCategories = [];
-    getCheckedCategorires(arrayCheckedCategories);
+    getCheckedCategories(arrayCheckedCategories);
     //get lawnmowers associated with checked categories
     var tempInventory = [];
     getFilteredLawnMowers(tempInventory, arrayCheckedCategories);
@@ -205,7 +205,7 @@ function filterContent() {
  * Gets all categories that are checked
  * @param {array} arrayCheckedCategories (initially empty array)
  */
-function getCheckedCategorires(arrayCheckedCategories) {
+function getCheckedCategories(arrayCheckedCategories) {
     const arrayInputs = document.getElementsByTagName("INPUT");
 
     for (var i = 0; i < arrayInputs.length; i++) {
@@ -365,7 +365,7 @@ function requestDataFile(fileName) {
 function HttpRequest(url, callback) {
     this.request = new XMLHttpRequest();
     //Get data from file (url) in synchronous mode. (3rd arg being set to false
-    // Meaning halt execation of other JS Code until contents of file have
+    // Meaning halt execution of other JS Code until contents of file have
     // been read. In other words, the 'callback' function (in this case
     // 'handleData' has finished its task.
     this.request.open("GET", url, false);
