@@ -85,7 +85,7 @@ function createPriceFilterBox() {
 
     for (const i of lawnMowerInventory) {
         let curPrice = parseInt(i.price);
-        let myRange = null;
+        let myRange = { count: 0 }; // dummy object
         for (const range of ranges) {
             if (curPrice > range.min) {
                 myRange = range;
@@ -93,9 +93,8 @@ function createPriceFilterBox() {
                 break;
             }
         }
-        if (myRange != null) {
-            myRange.count++;
-        }
+
+        myRange.count++;
     }
 
     //Create label, checkbox, and span elements for the ranges above
