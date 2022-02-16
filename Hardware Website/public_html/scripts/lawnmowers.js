@@ -199,9 +199,7 @@ function addEventListenerChkBoxes() {
     for (var i = 0; i < arrayInputs.length; i++) {
         if (arrayInputs[i].getAttribute("type") === "checkbox") {
             var chkBox = arrayInputs[i];
-            chkBox.addEventListener("click", function() {
-                filterContent();
-            });
+            chkBox.addEventListener("click", filterContent);
         }
     }
 
