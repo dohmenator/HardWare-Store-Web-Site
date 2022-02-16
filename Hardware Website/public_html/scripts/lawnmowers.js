@@ -194,7 +194,7 @@ function createCuttingWidthFilterBox() {
  * current checkbox to the filterContent method
  */
 function addEventListenerChkBoxes() {
-    arrayInputs = document.getElementsByTagName("INPUT");
+    const arrayInputs = document.getElementsByTagName("INPUT");
 
     for (var i = 0; i < arrayInputs.length; i++) {
         if (arrayInputs[i].getAttribute("type") === "checkbox") {
@@ -227,7 +227,7 @@ function filterContent() {
  * @param {array} arrayCheckedCategories (initially empty array)
  */
 function getCheckedCategorires(arrayCheckedCategories) {
-    arrayInputs = document.getElementsByTagName("INPUT");
+    const arrayInputs = document.getElementsByTagName("INPUT");
 
     for (var i = 0; i < arrayInputs.length; i++) {
         if (arrayInputs[i].type === "checkbox" && arrayInputs[i].checked) {
